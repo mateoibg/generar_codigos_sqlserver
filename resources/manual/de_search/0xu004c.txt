@@ -1,0 +1,16 @@
+LA
+ 4,5,6,7,2
+LAS
+ 4,7,6,5
+LE
+ 6,5
+LES
+ 6,5,4
+LISTA
+ 4,2
+LLENAR
+ 5
+LLEVARA
+ 6,5
+LOS
+ 5,6,4,7

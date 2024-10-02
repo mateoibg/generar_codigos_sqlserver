@@ -1,0 +1,10 @@
+HA
+ 5,6,4
+HACE
+ 6,5
+HAN
+ 7
+HARA
+ 6
+HAYA
+ 6

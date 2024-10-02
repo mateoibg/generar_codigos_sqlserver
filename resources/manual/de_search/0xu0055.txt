@@ -1,0 +1,16 @@
+ULTIMA
+ 6
+ULTIMO
+ 4,6,5
+ULTIMOS
+ 6,5
+UN
+ 6,5,4
+UNA
+ 4,6,7,5
+UNICO
+ 6,5
+UNO
+ 5,4
+USUARIO
+ 6,2
