@@ -43,8 +43,7 @@ class sqlgenerarcodigos_model extends Odbc
               //  echo  $serial." >= ". $codbar_iniabs. " &&" .$serial." <=".$codbar_finabs;
 
                 if ($serial >= $codbar_iniabs && $serial <= $codbar_finabs) {
-                    $query = "
-                        insert into spserial_codbar
+                    $query = "INSERT into spserial_codbar
                         (
                             maorpro,codpro,codpadre,num_serie,cant_imp,cant_fal,cant_reimp,num_serie_ini,
                             num_serie_fin,usrcrea,feccrea,horacre
@@ -53,7 +52,7 @@ class sqlgenerarcodigos_model extends Odbc
                         (
                             '$maorpro','$codpro','$codpro_padre','$serial','$cant_imp','$can_fal','$num_copias','$codbar_iniabs',
                             '$codbar_finabs','$user_intra',
-                            today,current
+                            CONVERT (date, SYSDATETIME()),GETDATE()
                         )
                     ";
 
@@ -96,16 +95,15 @@ class sqlgenerarcodigos_model extends Odbc
         } else {
 
             if ($serial >= $codbar_iniabs && $serial <= $codbar_finabs) {
-                $query = "
-                        update 
+                $query = "UPDATE 
                         spserial_codbar 
                         set 
                         codpro='$codpro',
                         codpadre='$codpro_padre',
                         cant_reimp= (cant_reimp+$num_copias),
                         usrmodi='$user_intra',
-                        fecmodi=today,
-                        horamod=current 
+                        fecmodi=CONVERT (date, SYSDATETIME()),
+                        horamod=GETDATE() 
                         where  
                         maorpro='$maorpro'
                         and num_serie='$serial'
@@ -141,8 +139,7 @@ class sqlgenerarcodigos_model extends Odbc
      */
     function comprobarCantidadLineas($maorpro)
     {
-        $query = "
-                    select
+        $query = "SELECT
                     count(*) cant  
                     from
                     spserial_codbar  codbar    
@@ -165,9 +162,7 @@ class sqlgenerarcodigos_model extends Odbc
      */
     function comprobarSerialExiste($maorpro,  $serial)
     {
-        $query = " 
-                    -- query para verificar que el serial no exista para una OP
-                    select
+        $query = "SELECT
                     count(*) cant  
                     from
                     spserial_codbar  codbar    

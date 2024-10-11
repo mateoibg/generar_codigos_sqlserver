@@ -38,13 +38,13 @@ define("INICIAR_SIMULADOR", false);
 define("ODBC_USER", 'informix');
 define("ODBC_PASS", 'poseidon');*/
 
-define("ODBC", 'ifxibgdir'); //ifxibgdir
-define("ODBC_USER", USER100_1_ODBC);
-define("ODBC_PASS", PASS100_1_ODBC);
+define("ODBC", 'ifx_ibg'); //ifxibgdir
+define("ODBC_USER", USER_IBG_SERVER);
+define("ODBC_PASS", PASS_IBG_SERVER);
 
 
 define("ODBCMYSQL", 'intranet'); //ifxibgdir
-define('ODBC_USERMYSQL', 'ibg');
-define('ODBC_PASSMYSQL', 'ibgsa40');
+define('ODBC_USERMYSQL', USER_INTRANET);
+define('ODBC_PASSMYSQL', PASS_INTRANET);
 define("IP_FTP", "192.168.100.10");
 define("PORT_FTP", "3306");

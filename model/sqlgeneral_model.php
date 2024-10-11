@@ -31,11 +31,11 @@ class sqlgeneral_model extends Odbc
         FROM spmaematr mm, spdetmatr dm ,siprdcto s
         WHERE mm.consec = dm.conmas
         AND dm.codmatp = '$codigopr'
-        AND sicopr[1,13]=codprod[1,13]
+        AND SUBSTRING(sicopr, 1, 13) = SUBSTRING(codprod, 1, 13)
         AND sicodmat=0
         AND sigrupo in(4,5)    
         AND sioblser='S'   --si el producto obliga  aque tenga serie      
-        AND length(sicopr)=16
+        AND len(sicopr)=16
         AND  sicoci='A'
         ";
 
@@ -64,7 +64,7 @@ class sqlgeneral_model extends Odbc
 
             $cod_prod = trim($reg['sicopr']);
             $cod_ean = trim($reg['sicod_ean']);
-            $nom_prod = utf8_encode(trim($reg['sidepr']));
+            $nom_prod =iconv('ISO-8859-1', 'UTF-8', trim($reg['sidepr'])) ;
             $datos_prod = $nom_prod . " - (" . $cod_prod . ")";
 
             if ($cod_ean == null || $cod_ean == '') {
@@ -84,15 +84,14 @@ class sqlgeneral_model extends Odbc
      */
     function ObtenerProducto($codsubpro)
     {
-        $query = "
-                    select 
+        $query = "SELECT 
                     maes.consec,
                     maes.cod_combo as codpadre,
                     sipr.sidepr as nomprod,
                     sipr.sicod_ean
                     from 
                     s2detprod  det
-                    join jst.s2masprod maes                   
+                    join s2masprod maes                   
                     on det.consec_mascombo=maes.consec
                     join siprdcto sipr 
                     on maes.cod_combo=sipr.sicopr
@@ -111,9 +110,9 @@ class sqlgeneral_model extends Odbc
         while ($reg = $datosodbc->getRegistro()) {
 
             $consec = trim($reg['consec']);
-            $codpadre = utf8_encode(trim($reg['codpadre']));
-            $cod_ean = utf8_encode(trim($reg['sicod_ean']));
-            $nom_prod = utf8_encode(trim($reg['nomprod']));
+            $codpadre = iconv('ISO-8859-1', 'UTF-8', trim($reg['codpadre']));
+            $cod_ean = iconv('ISO-8859-1', 'UTF-8', trim($reg['sicod_ean'])) ;
+            $nom_prod = iconv('ISO-8859-1', 'UTF-8', trim($reg['nomprod']));
             $datos_prod = $nom_prod . " - (" . $codpadre . ")";
 
 
@@ -135,18 +134,16 @@ class sqlgeneral_model extends Odbc
 
         if ($buscar_porfecha == true) {
 
-            $fechaini_busqueda = $mes . "/" . '01' . '/' . $anio;
+            $fechaini_busqueda =  '01/'.$mes . '/' . $anio;
             $numero_dias_mes = date('t', strtotime($fechaini_busqueda)); //traemos el nuero de dias del mes
-            $fechafin_busqueda = $mes . "/" . $numero_dias_mes . '/' . $anio;
-
+            $fechafin_busqueda = $numero_dias_mes . "/" . $mes . '/' . $anio;
             $condicion_fecha = "and orp.fecprodu>= '$fechaini_busqueda'  and orp.fecprodu<= '$fechafin_busqueda'";
         }
 
         $query =
-            "
-            select 
+            "SELECT 
             orp.consec,
-            to_char(orp.fecprodu) as fecprodu,
+            FORMAT(orp.fecprodu,'MM/dd/yyyy') as fecprodu,
             orp.numdocum,
             orp.descripc,
             orp.codigopr,
@@ -246,8 +243,7 @@ class sqlgeneral_model extends Odbc
     function ObtenerSeriales($consec)
     {
 
-        $query = "
-                select 
+        $query = "SELECT 
                 consec, 
                 num_serie                   
                 from 
@@ -284,17 +280,16 @@ class sqlgeneral_model extends Odbc
      */
     function ObtenerListaSeriales($consec)
     {
-        $query = "
-                select 
+        $query = "SELECT 
                 maorpro,                 
                 codpro,
                 cant_reimp,
                 num_serie,
                 usrcrea, 
                 usrmodi,                  
-                to_char(feccrea) feccrea,
+                FORMAT(feccrea,'MM/dd/yyyy') feccrea,
                 horacre,
-                to_char(fecmodi) fecmodi,
+                FORMAT(fecmodi,'MM/dd/yyyy')fecmodi,
                 horamod
                 from 
                 spserial_codbar

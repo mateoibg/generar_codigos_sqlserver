@@ -6,10 +6,10 @@ $IDMENUACTUAL[8] = true;
 
 /* Configuración global */
 require_once 'config/global.php';
-
+require_once 'config/structure.php';
 /* Funciones para el controlador frontal */
-require_once RUTA_MVC . 'core/ControladorBase.php';
-require_once RUTA_MVC . 'core/VistaBase.php';
+require_once RUTA_MVC . 'core2/ControladorBase_SQL.php';
+require_once RUTA_MVC . 'core2/VistaBase.php';
 
 define('RAIZ_APLICACION', dirname(__FILE__)); // nos ubicamos en la raiz detalle_venta
 
